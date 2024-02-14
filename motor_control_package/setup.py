@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'actuator_control_package'
+package_name = 'motor_control_package'
 
 setup(
     name=package_name,
