@@ -3,12 +3,12 @@ from .MotorListener import MotorListener
 import RPi.GPIO as GPIO
 import rclpy
 
-class PWM(MotorListener):
+class BLDC(MotorListener):
 
     MIN_RANGE = 0
     MAX_RANGE = 100
 
-    def __init__(self, topic, pin, freq, min_dc, max_dc, init_range, invert=False):
+    def __init__(self, topic, pin, dir_pin, freq, min_dc, max_dc, init_range, invert=False):
         """
         A PWM class that sets RPi pin to specified duty cycle and freqency
             
@@ -31,6 +31,7 @@ class PWM(MotorListener):
         self.max_dc = max_dc
         self.init_range = init_range
         self.invert = invert
+        self.dir_pin = dir_pin
         try:
             GPIO.setmode(GPIO.BCM)
         except Exception:
@@ -38,7 +39,11 @@ class PWM(MotorListener):
         try:
             GPIO.setup(pin, GPIO.OUT, initial = GPIO.LOW)
         except Exception:
-            print('Pin setup failure')
+            print('PWM pin setup failure')
+        try: 
+            GPIO.setup(dir_pin, GPIO.OUT, initial = GPIO.LOW)
+        except Exception:
+            print('Direction pin setup failure')
 
         self.pwm = GPIO.PWM(pin, freq)
         self.pwm.start(self.convertRangeToDutyCycle(init_range))
@@ -50,7 +55,7 @@ class PWM(MotorListener):
         dc = (percent * (self.max_dc - self.min_dc) / self.MAX_RANGE) + self.min_dc
         return self.max_dc + self.min_dc - dc if (self.invert) else (dc)
         
-    def setPosition(self, percent):
+    def setSpeed(self, percent):
         self.pwm.ChangeDutyCycle(self.convertRangeToDutyCycle(percent))
 
     def disable(self):
@@ -58,7 +63,12 @@ class PWM(MotorListener):
         self.pwm.ChangeDutyCycle(0)
 
     def update(self, data):
-        self.setPosition(data)
+        if data < 0:
+            GPIO.output(self.dir_pin, GPIO.HIGH)
+        else:
+            GPIO.output(self.dir_pin, GPIO.LOW)
+            
+        self.setSpeed(abs(data))
 
     def loop(self):
         rclpy.spin(self)
