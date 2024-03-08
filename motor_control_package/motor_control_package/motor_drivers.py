@@ -17,10 +17,10 @@ class MotorDriver(Node):
         self.motors.append(BLDC(topic='/motor/tread_right', pin=13, dir_pin=6, freq=50, min_dc=0, max_dc=100, init_range=0))
         self.get_logger().info("Initialized Drive Motors")
 
-        self.motors.append(BLDC(topic='/motor/arm_angle_joint', pin=16, freq=50, min_dc=0, max_dc=100, init_range=0))
+        self.motors.append(Actuator(topic='/motor/arm_angle_joint', pinA=23, pinB=24))
         self.get_logger().info("Initialized Arm Articulation")
 
-        self.motors.append(BLDC(topic='/motor/bucket_angle_joint', pin=16, freq=50, min_dc=0, max_dc=100, init_range=0))
+        self.motors.append(Actuator(topic='/motor/bucket_angle_joint', pinA=7, pinB=8))
         self.get_logger().info("Initialized Bucket Articulation")
 
         for motor in self.motors:

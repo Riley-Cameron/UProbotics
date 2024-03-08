@@ -54,10 +54,10 @@ class Actuator(MotorListener):
         if (self.state == self.STOPPED):
             GPIO.output(self.pinA, GPIO.LOW)
             GPIO.output(self.pinB, GPIO.LOW)
-        elif (data == self.EXTEND):
+        elif (self.state == self.EXTEND):
             GPIO.output(self.pinA, GPIO.HIGH)
             GPIO.output(self.pinB, GPIO.LOW)
-        elif (data == self.RETRACT):
+        elif (self.state == self.RETRACT):
             GPIO.output(self.pinA, GPIO.LOW)
             GPIO.output(self.pinB, GPIO.HIGH)     
 
