@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import PWM
+import motor_control_package.motor_control_package.BLDC as BLDC
+import Actuator as Actuator
 
 from std_msgs.msg import Float64
 import rclpy
@@ -12,14 +13,14 @@ class MotorDriver(Node):
     def __init__(self):
         self.motors = []
 
-        self.motors.append(PWM(topic='/motor/tread_left', pin=16, freq=1000, min_dc=0, max_dc=90, init_range=0))
-        self.motors.append(PWM(topic='/motor/tread_right', pin=16, freq=1000, min_dc=0, max_dc=90, init_range=0))
+        self.motors.append(BLDC(topic='/motor/tread_left', pin=12, dir_pin=16, freq=50, min_dc=0, max_dc=100, init_range=0))
+        self.motors.append(BLDC(topic='/motor/tread_right', pin=13, dir_pin=6, freq=50, min_dc=0, max_dc=100, init_range=0))
         self.get_logger().info("Initialized Drive Motors")
 
-        self.motors.append(PWM(topic='/motor/arm_angle_joint', pin=16, freq=50, min_dc=0, max_dc=100, init_range=0))
+        self.motors.append(Actuator(topic='/motor/arm_angle_joint', pinA=23, pinB=24))
         self.get_logger().info("Initialized Arm Articulation")
 
-        self.motors.append(PWM(topic='/motor/bucket_angle_joint', pin=16, freq=50, min_dc=0, max_dc=100, init_range=0))
+        self.motors.append(Actuator(topic='/motor/bucket_angle_joint', pinA=7, pinB=8))
         self.get_logger().info("Initialized Bucket Articulation")
 
         for motor in self.motors:
