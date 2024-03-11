@@ -8,7 +8,7 @@ class BLDC(MotorListener):
     MIN_RANGE = 0
     MAX_RANGE = 100
 
-    def __init__(self, topic, pin, dir_pin, freq, min_dc, max_dc, init_range, invert=False):
+    def __init__(self, topic, pin, dir_pin, en_pin, freq, min_dc, max_dc, init_range, invert=False):
         """
         A PWM class that sets RPi pin to specified duty cycle and freqency
             
@@ -16,7 +16,9 @@ class BLDC(MotorListener):
             RPi.GPIO
         Parameters:
             topic: name of ROS topic to subscribe to
-            pin: Board pin of signal (BCM)
+            pin: Board pin of PWM signal (BCM)
+            dir_pin: motor direction -> LOW for forward
+            en_pin: enable motor -> LOW to enable
             min_dc: Minimum duty cycle of motor (%)
             max_dc: Maximum duty cycle of motor (%)
             init_range: Initial % of the duty cycle range (%)
@@ -32,6 +34,7 @@ class BLDC(MotorListener):
         self.init_range = init_range
         self.invert = invert
         self.dir_pin = dir_pin
+        self.en_pin = en_pin
         try:
             GPIO.setmode(GPIO.BCM)
         except Exception:
@@ -44,9 +47,14 @@ class BLDC(MotorListener):
             GPIO.setup(dir_pin, GPIO.OUT, initial = GPIO.LOW)
         except Exception:
             print('Direction pin setup failure')
+        try: 
+            GPIO.setup(en_pin, GPIO.OUT, initial = GPIO.LOW)
+        except Exception:
+            print('Enable pin setup failure')
 
         self.pwm = GPIO.PWM(pin, freq)
         self.pwm.start(self.convertRangeToDutyCycle(init_range))
+        GPIO.output(self.en_pin, GPIO.LOW)
 
     def convertRangeToDutyCycle(self, percent):
         if (percent < self.MIN_RANGE or percent > self.MAX_RANGE):
@@ -74,4 +82,4 @@ class BLDC(MotorListener):
         rclpy.spin(self)
 
     def on_exit(self):
-        pass
+        GPIO.output(self.en_pin, GPIO.HIGH)
