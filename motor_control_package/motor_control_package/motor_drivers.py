@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import BLDC as BLDC
-import Actuator as Actuator
+from BLDC import BLDC
+from Actuator import Actuator
 
 from std_msgs.msg import Float64
 import rclpy
