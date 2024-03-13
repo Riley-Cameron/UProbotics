@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import motor_control_package.motor_control_package.BLDC as BLDC
+import BLDC as BLDC
 import Actuator as Actuator
 
 from std_msgs.msg import Float64
