@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from abc import ABC, abstractmethod
 import rclpy
-from rclpy import Node
+from rclpy.node import Node
 from std_msgs.msg import Float64
 from threading import Thread
 
