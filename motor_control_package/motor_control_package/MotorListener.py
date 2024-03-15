@@ -14,17 +14,17 @@ class MotorListener(ABC, Thread, Node):
         data: Last message from the topic stored
     """
     def __init__(self, topic: str):
-        super().__init__("node"+topic)
+        super().__init__()
         self.sub = self.create_subscription(Float64, topic, self.topic_callback, 10)
         self.updated = True
         self.data = None
         self.stop = False
 
 
-    def topic_callback(self, data : Float64):
-        if self.data == data.data:
+    def topic_callback(self, msg: Float64):
+        if self.data == msg.data:
             return
-        self.data = data.data # Unpack std_msgs.Float64 to float
+        self.data = msg.data # Unpack std_msgs.Float64 to float
         self.updated = False
 
 
