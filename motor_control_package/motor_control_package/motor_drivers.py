@@ -5,7 +5,7 @@ from Actuator import Actuator
 
 from std_msgs.msg import Float64
 import rclpy
-from rclpy import Node
+from rclpy.node import Node
 import RPi.GPIO as GPIO
 
 class MotorDriver(Node):
