@@ -14,7 +14,9 @@ class MotorListener(ABC, Thread, Node):
         data: Last message from the topic stored
     """
     def __init__(self, topic: str):
-        super().__init__()
+        Thread.__init__()
+        ABC.__init__()
+        Node.init("node"+topic)
         self.sub = self.create_subscription(Float64, topic, self.topic_callback, 10)
         self.updated = True
         self.data = None
