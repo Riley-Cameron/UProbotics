@@ -9,7 +9,7 @@ class BLDC(MotorListener):
     MIN_RANGE = 0
     MAX_RANGE = 100
 
-    def __init__(self, topic, pin, dir_pin, en_pin, freq, min_dc, max_dc, init_range, invert=False):
+    def __init__(self, topic, node, pin, dir_pin, en_pin, freq, min_dc, max_dc, init_range, invert=False):
         """
         A PWM class that sets RPi pin to specified duty cycle and freqency
             
@@ -27,7 +27,7 @@ class BLDC(MotorListener):
             freq: frequency of PWM (hz)
             invert: reverses PWM range mapping
         """
-        super().__init__(topic)
+        super().__init__(topic, node)
         if (init_range < self.MIN_RANGE or init_range > self.MAX_RANGE):
             raise ValueError("init DC is not between min and max dc")
         self.min_dc = min_dc

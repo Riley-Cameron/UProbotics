@@ -9,7 +9,7 @@ class Actuator(MotorListener):
     EXTEND = 1
     RETRACT = 2
 
-    def __init__(self, topic, pinA, pinB):
+    def __init__(self, topic, node, pinA, pinB):
         """
         A PWM class that sets RPi pin to specified duty cycle and freqency
             
@@ -20,7 +20,7 @@ class Actuator(MotorListener):
             pinA: Board pin for controlling relay A (BCM)
             pinB: Board pin for controlling relay B (BCM)
         """
-        super().__init__(topic)
+        super().__init__(topic, node)
         self.state = self.STOPPED
         self.pinA = pinA
         self.pinB = pinB

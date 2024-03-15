@@ -13,10 +13,10 @@ class MotorListener(ABC, Thread, Node):
         updated: True if we have a new value to pass to motor, else False
         data: Last message from the topic stored
     """
-    def __init__(self, topic: str):
-        Thread.__init__()
-        ABC.__init__()
-        Node.init("node"+topic)
+    def __init__(self, topic: str, node: str):
+        Thread.__init__(self)
+        ABC.__init__(self)
+        Node.__init__(self, node)
         self.sub = self.create_subscription(Float64, topic, self.topic_callback, 10)
         self.updated = True
         self.data = None
