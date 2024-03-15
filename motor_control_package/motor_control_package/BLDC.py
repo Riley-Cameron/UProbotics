@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 from MotorListener import MotorListener
-import RPi.GPIO as GPIO
 import rclpy
+import RPi.GPIO as GPIO
+
 
 class BLDC(MotorListener):
 
