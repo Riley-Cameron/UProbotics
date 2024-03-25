@@ -32,6 +32,6 @@ if __name__ == '__main__':
     rclpy.init()
     md = MotorDriver()
 
-    rclpy.spin()
+    rclpy.spin(md)
 
     GPIO.cleanup()
