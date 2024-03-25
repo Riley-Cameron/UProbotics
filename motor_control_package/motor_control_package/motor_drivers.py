@@ -15,7 +15,7 @@ class MotorDriver(Node):
         self.motors = []
 
         self.motors.append(BLDC(topic='/motor/tread_left', node='left_tread', pin=12, dir_pin=16, en_pin=20, freq=50, min_dc=0, max_dc=90, init_range=0))
-        self.motors.append(BLDC(topic='/motor/tread_right', node='rigth_tread', pin=13, dir_pin=6, en_pin=5, freq=50, min_dc=0, max_dc=90, init_range=0))
+        self.motors.append(BLDC(topic='/motor/tread_right', node='right_tread', pin=13, dir_pin=6, en_pin=5, freq=50, min_dc=0, max_dc=90, init_range=0))
         self.get_logger().info("Initialized Drive Motors")
 
         self.motors.append(Actuator(topic='/motor/arm_angle_joint', node='arm_joint', pinA=23, pinB=24))
