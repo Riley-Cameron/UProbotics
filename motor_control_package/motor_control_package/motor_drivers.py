@@ -32,6 +32,14 @@ def main(args=None):
     md = MotorDriver()
 
     for motor in md.motors:
+        motor.spin()
+
+    try:
+        rclpy.spin(md)
+    except KeyboardInterrupt:
+        pass
+
+    for motor in md.motors:
         motor.destroy_node()
 
     GPIO.cleanup()
