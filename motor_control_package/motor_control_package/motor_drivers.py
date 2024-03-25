@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO
 class MotorDriver(Node):
     
     def __init__(self):
-        super.__init__("motor_drivers")
+        super().__init__("motor_drivers")
         self.motors = []
 
         self.motors.append(BLDC(topic='/motor/tread_left', node='left_tread', pin=12, dir_pin=16, en_pin=20, freq=50, min_dc=0, max_dc=90, init_range=0))
