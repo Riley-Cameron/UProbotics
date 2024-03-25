@@ -52,7 +52,7 @@ class MotorListener(ABC, Thread, Node):
         pass
     
     def run(self):
-        while not rclpy.is_shutdown() and not self.stop:
+        while not rclpy._shutdown() and not self.stop:
             if not self.updated:
                 self.updated = True
                 self.update(self.data)
