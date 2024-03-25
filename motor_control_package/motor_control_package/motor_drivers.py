@@ -31,11 +31,6 @@ def main(args=None):
     rclpy.init(args=args)
     md = MotorDriver()
 
-    try:
-        rclpy.spin(md)
-    except KeyboardInterrupt:
-        pass
-
     for motor in md.motors:
         motor.destroy_node()
 

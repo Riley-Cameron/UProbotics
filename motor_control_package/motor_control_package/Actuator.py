@@ -68,8 +68,7 @@ class Actuator(MotorListener):
         self.setState(data)
 
     def loop(self):
-        pass
-        #rclpy.spin(self)
+        rclpy.spin(self)
 
     def on_exit(self):
         pass
