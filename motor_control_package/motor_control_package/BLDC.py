@@ -80,7 +80,8 @@ class BLDC(MotorListener):
         self.setSpeed(abs(data))
 
     def loop(self):
-        rclpy.spin(self)
+        pass
+        #rclpy.spin(self)
 
     def on_exit(self):
         GPIO.output(self.en_pin, GPIO.HIGH)
