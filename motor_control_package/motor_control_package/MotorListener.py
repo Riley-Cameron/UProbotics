@@ -50,6 +50,9 @@ class MotorListener(ABC, Thread, Node):
     @abstractmethod
     def on_exit(self):
         pass
+
+    def spin(self):
+        rclpy.spin(self)
     
     def run(self):
         while rclpy.ok() and not self.stop:
