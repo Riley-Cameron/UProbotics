@@ -74,22 +74,38 @@ class TeleopNode(Node):
 
                 #BUCKET ARM:
                 # read joystick values
-                arm_extend = self.joystick.get_button(3) #Y button
-                arm_retract = self.joystick.get_button(0) #A button
+                arm_up = self.joystick.get_button(3) #Y button
+                arm_down = self.joystick.get_button(0) #A button
                 bucket_down = self.joystick.get_button(2) #X button
-                # for event in pygame.event.get():
-                #     if event.type == pygame.JOYBUTTONDOWN:
-                #         print("Button pressed:", event.button)
-                #     elif event.type == pygame.JOYAXISMOTION:
-                #         print("Axis motion - Axis:", event.axis, "Value:", event.value)
+                bucket_up = self.joystick.get_button(1) #B button
+
+                #set arm state message
+                if (arm_up and not arm_down):
+                    self.arm_state.data = self.EXTEND
+                elif (not arm_up and arm_down):
+                    self.arm_state.data = self.RETRACT
+                else:
+                    self.arm_state.data = self.STOPPED
+
+                #set bucket state message
+                if (bucket_up and not bucket_down):
+                    self.bucket_state.data = self.RETRACT
+                elif (not bucket_up and bucket_down):
+                    self.bucket_state.data = self.EXTEND
+                else:
+                    self.bucket_state.data = self.STOPPED
+
+                #publish values
+                self.cmd_bucket_state_pub.publish(self.bucket_state)
+                self.cmd_arm_state_pub.publish(self.arm_state)
+
                 
                 # Wait a bit before sending the next command to avoid overwhelming the server.
-                time.sleep(1)
+                time.sleep(0.1)
         except KeyboardInterrupt:
             # Handle user interrupt (Ctrl+C).
             print("Program terminated by user.")
             pygame.quit()
-            rclpy.shutdown()
 
 def main(args=None):
     rclpy.init(args=args) #initialize ros2 communication
