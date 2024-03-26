@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'joy_teleop = teleoperation_package.joy_teleop:main',  
         ],
     },
 )
+
