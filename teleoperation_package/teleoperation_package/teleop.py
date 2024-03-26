@@ -101,7 +101,7 @@ class TeleopNode(Node):
 
                 
                 # Wait a bit before sending the next command to avoid overwhelming the server.
-                time.sleep(0.1)
+                time.sleep(0.05)
         except KeyboardInterrupt:
             # Handle user interrupt (Ctrl+C).
             print("Program terminated by user.")
