@@ -5,7 +5,7 @@ from rclpy.node import Node
 from std_msgs.msg import Float64
 from threading import Thread
 
-class MotorListener(ABC, Node):
+class MotorListener(ABC, Thread, Node):
 
     """
     Parameters:
@@ -14,7 +14,7 @@ class MotorListener(ABC, Node):
         data: Last message from the topic stored
     """
     def __init__(self, topic: str, node: str):
-        #Thread.__init__(self)
+        Thread.__init__(self)
         ABC.__init__(self)
         Node.__init__(self, node)
         self.sub = self.create_subscription(Float64, topic, self.topic_callback, 10)
