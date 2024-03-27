@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            "base_control = base_control_package.base_control:main"
         ],
     },
 )

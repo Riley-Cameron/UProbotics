@@ -2,26 +2,54 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
+from std_msgs.msg import Float64, Int16
 
-#TODO
-#node inheritor
 class BaseControl(Node):
 
     def __init__(self):
         super().__init__("base_control")
-        self.cmd_vel_pub_ = self.create_publisher(Twist, "/turtle1/cmd_vel", 10)
-        self.pose_sub_ = self.create_subscription(Twist, "/turtle1/pose", self.recieve_pose, 10)
-        self.get_logger().info("Drawing Circle:")
-        self.create_timer(1, self.send_vel)
+        self.cmd_vel_sub = self.create_subscription(Twist, "/cmd/velocity", self.recieve_vel, 10)
+        self.cmd_arm_sub = self.create_subscription(Int16, "/cmd/arm_state", self.recieve_arm_state, 10)
+        self.cmd_bucket_sub = self.create_subscription(Int16, "/cmd/bucket_state", self.recieve_bucket_state, 10)
 
-    def send_vel(self):
-        msg = Twist()
-        msg.linear.x = -1.5
-        msg.angular.z = 0.77
-        self.cmd_vel_pub_.publish(msg)
+        self.left_tread_pub = self.create_publisher(Float64, "/motor/tread_left", 10)
+        self.right_tread_pub = self.create_publisher(Float64, "/motor/tread_right", 10)
+        self.arm_state_pub = self.create_publisher(Float64, "/motor/arm_state", 10)
+        self.bucket_state_pub = self.create_publisher(Float64, "/motor/bucket_state", 10)
 
-    def recieve_pose(self, msg: Twist):
-        self.get_logger().info("Turtle direction: " + str(msg.theta))
+        self.last_cmd_vel = Twist()
+        self.last_cmd_arm = Int16()
+        self.last_cmd_bucket = Int16()
+        self.get_logger().info("Base Control Initialized")
+
+    def recieve_vel(self, msg: Twist):
+        #only send new values when necessary
+        if (msg.angular.z != self.last_cmd_vel.angular.z and abs(msg.linear.x - self.last_cmd_vel.linear.x) > 1.0):
+            self.last_cmd_vel = msg
+            left_vel = Float64()
+            right_vel = Float64()
+
+            left_vel.data = 0.0
+            right_vel.data = 0.0
+
+            if (msg.angular.z == 0):
+                left_vel.data = msg.linear.x
+                right_vel.data = -msg.linear.x
+            elif (msg.angular.z == 50):
+                left_vel.data = -65
+                right_vel.data = -65
+            elif (msg.angular.z == -50):
+                left_vel.data = 65
+                right_vel.data = 65
+
+            self.left_tread_pub.publish(left_vel)
+            self.right_tread_pub.publish(right_vel)
+
+    def recieve_arm_state(self, msg: Int16):
+        pass
+
+    def recieve_bucket_state(self, msg: Int16):
+        pass
 
 
 def main(args=None):
