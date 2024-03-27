@@ -13,6 +13,16 @@ def generate_launch_description():
             executable='right_tread', 
             name='rt'
         ),
+        Node(
+            package='motor_control_package',
+            executable='arm_joint', 
+            name='aj'
+        ),
+        Node(
+            package='motor_control_package',
+            executable='bucket_joint', 
+            name='bj' # ;)
+        ),
         # Add more nodes as needed
     ])
 

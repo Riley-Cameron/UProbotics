@@ -21,7 +21,9 @@ setup(
     entry_points={
         'console_scripts': [
             "left_tread = motor_control_package.left_tread:main",
-            "right_tread = motor_control_package.right_tread:main"
+            "right_tread = motor_control_package.right_tread:main",
+            "arm_joint = motor_control_package.arm_joint:main",
+            "bucket_joint = motor_control_package.bucket_joint:main"
         ],
     },
 )

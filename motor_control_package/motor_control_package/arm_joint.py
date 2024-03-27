@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from Actuator import Actuator
+from .Actuator import Actuator
 import rclpy
 import RPi.GPIO as GPIO
 
