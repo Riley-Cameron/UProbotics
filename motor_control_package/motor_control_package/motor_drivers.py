@@ -5,7 +5,7 @@ import rclpy
 import RPi.GPIO as GPIO
 
 def main(args=None):
-    rclpy.init(args=args)
+    #rclpy.init(args=args)
     
     motors = []
 
@@ -19,18 +19,17 @@ def main(args=None):
     for motor in motors:
         motor.start()
 
-    #spin each motor's event loop
-    try:
-        for motor in motors:
-            rclpy.spin(motor)
-    except KeyboardInterrupt:
-        pass
-    except Exception as e:
-        print(f"Exception occurred while spinning {motor.node} node: {e}")
+    # #spin each motor's event loop
+    # try:
+    #     for motor in motors:
+    #         rclpy.spin(motor)
+    # except KeyboardInterrupt:
+    #     pass
+    # except Exception as e:
+    #     print(f"Exception occurred while spinning {motor.node} node: {e}")
 
-    #stop and join all motor threads
+    #join all motor threads
     for motor in motors:
-        motor.stop()
         motor.join()
 
     #Clean up GPIO and shutdown ROS 2

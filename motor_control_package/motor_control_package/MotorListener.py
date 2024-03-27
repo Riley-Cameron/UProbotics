@@ -42,7 +42,7 @@ class MotorListener(ABC, Thread, Node):
     """
     @abstractmethod
     def loop(self):
-        pass
+        self.spin()
 
     """
     Gets called when the thread is finished
@@ -55,6 +55,7 @@ class MotorListener(ABC, Thread, Node):
         rclpy.spin(self)
     
     def run(self):
+        rclpy.init(args=None)
         while rclpy.ok() and not self.stop:
             if not self.updated:
                 self.updated = True
