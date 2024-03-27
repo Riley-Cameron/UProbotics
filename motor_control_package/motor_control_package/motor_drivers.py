@@ -25,6 +25,8 @@ def main(args=None):
             rclpy.spin(motor)
     except KeyboardInterrupt:
         pass
+    except Exception as e:
+        print(f"Exception occurred while spinning {motor.node} node: {e}")
 
     #stop and join all motor threads
     for motor in motors:
