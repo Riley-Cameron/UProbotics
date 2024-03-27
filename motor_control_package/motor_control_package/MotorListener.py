@@ -14,7 +14,6 @@ class MotorListener(ABC, Thread, Node):
         data: Last message from the topic stored
     """
     def __init__(self, topic: str, node: str):
-        rclpy.init(args=None)
         Thread.__init__(self)
         ABC.__init__(self)
         Node.__init__(self, node)
@@ -43,7 +42,7 @@ class MotorListener(ABC, Thread, Node):
     """
     @abstractmethod
     def loop(self):
-        self.spin()
+        pass
 
     """
     Gets called when the thread is finished
