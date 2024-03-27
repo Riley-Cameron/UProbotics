@@ -31,8 +31,7 @@ def main(args=None):
     rclpy.init(args=args)
     md = MotorDriver()
 
-    for motor in md.motors:
-        motor.spin()
+    md.motors[0].spin()
 
     try:
         rclpy.spin(md)
