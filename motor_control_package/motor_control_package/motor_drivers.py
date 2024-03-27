@@ -5,7 +5,7 @@ import rclpy
 import RPi.GPIO as GPIO
 
 def main(args=None):
-    #rclpy.init(args=args)
+    rclpy.init(args=args)
     
     motors = []
 
