@@ -11,7 +11,9 @@ class NodeThread(Thread):
         self.node = node
 
     def run(self):
-        rclpy.spin(self.node)
+        executor = rclpy.executors.MultiThreadedExecutor(num_threads=1)
+        executor.add_node(self.node)
+        executor.spin()
 
 def main(args=None):
     rclpy.init(args=args)
@@ -39,4 +41,5 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+
 
