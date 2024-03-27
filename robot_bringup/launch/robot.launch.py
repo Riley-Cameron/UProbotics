@@ -2,7 +2,7 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 
 def generate_launch_description():
-    return LaunchDescription([
+    ld = LaunchDescription([
         Node(
             package='motor_control_package',
             executable='left_tread',  
@@ -15,3 +15,5 @@ def generate_launch_description():
         ),
         # Add more nodes as needed
     ])
+
+    return ld
