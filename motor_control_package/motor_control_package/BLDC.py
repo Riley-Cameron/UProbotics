@@ -57,6 +57,8 @@ class BLDC(MotorListener):
         self.pwm.start(self.convertRangeToDutyCycle(init_range))
         GPIO.output(self.en_pin, GPIO.LOW)
 
+        self.get_logger().info("BLDC Node Initialized")
+
     def convertRangeToDutyCycle(self, percent):
         if (percent < self.MIN_RANGE or percent > self.MAX_RANGE):
             print('Servo set out of bounds')
@@ -72,7 +74,6 @@ class BLDC(MotorListener):
         self.pwm.ChangeDutyCycle(0)
 
     def update(self, data):
-        print('Motor data updated')
         if data < 0:
             GPIO.output(self.dir_pin, GPIO.HIGH)
         else:

@@ -36,6 +36,8 @@ class Actuator(MotorListener):
             GPIO.setup(pinB, GPIO.OUT, initial = GPIO.LOW)
         except Exception:
             print("PinB setup failure") 
+
+        self.get_logger().info("Actuator Node Initialized")
         
     def setState(self, data):
         if (data == self.STOPPED):
