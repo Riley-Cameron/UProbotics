@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from BLDC import BLDC
+from .BLDC import BLDC
 import rclpy
 import RPi.GPIO as GPIO
 

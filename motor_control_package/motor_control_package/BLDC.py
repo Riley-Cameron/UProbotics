@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from MotorListener import MotorListener
+from .MotorListener import MotorListener
 import rclpy
 import RPi.GPIO as GPIO
 
