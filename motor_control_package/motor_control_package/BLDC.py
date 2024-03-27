@@ -58,7 +58,6 @@ class BLDC(MotorListener):
         GPIO.output(self.en_pin, GPIO.LOW)
 
         self.get_logger().info("BLDC Node Initialized")
-        self.spin()
 
     def convertRangeToDutyCycle(self, percent):
         if (percent < self.MIN_RANGE or percent > self.MAX_RANGE):
