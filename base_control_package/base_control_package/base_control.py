@@ -24,7 +24,7 @@ class BaseControl(Node):
 
     def recieve_vel(self, msg: Twist):
         #only send new values when necessary
-        if (msg.angular.z != self.last_cmd_vel.angular.z and abs(msg.linear.x - self.last_cmd_vel.linear.x) > 1.0):
+        if (msg.angular.z != self.last_cmd_vel.angular.z or abs(msg.linear.x - self.last_cmd_vel.linear.x) > 1.0):
             self.last_cmd_vel = msg
             left_vel = Float64()
             right_vel = Float64()
@@ -36,11 +36,11 @@ class BaseControl(Node):
                 left_vel.data = msg.linear.x
                 right_vel.data = -msg.linear.x
             elif (msg.angular.z == 50):
-                left_vel.data = -65
-                right_vel.data = -65
+                left_vel.data = -65.0
+                right_vel.data = -65.0
             elif (msg.angular.z == -50):
-                left_vel.data = 65
-                right_vel.data = 65
+                left_vel.data = 65.0
+                right_vel.data = 65.0
 
             self.left_tread_pub.publish(left_vel)
             self.right_tread_pub.publish(right_vel)
@@ -57,3 +57,6 @@ def main(args=None):
     node = BaseControl() #instantiate a node (starts node)
     rclpy.spin(node) # .spin runs a node until it is manually killed
     rclpy.shutdown() # end ros2 comms
+
+if __name__ == '__main__':
+    main()

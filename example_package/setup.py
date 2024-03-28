@@ -20,8 +20,6 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "test_node = example_package.my_first_node:main",
-            "draw_circle = example_package.draw_circle:main"
         ],
     },
 )
