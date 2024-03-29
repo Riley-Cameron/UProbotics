@@ -17,15 +17,14 @@ def main(args=None):
 
     node = BLDC(topic='/motor/tread_left', node='left_tread', pin=12, dir_pin=16, en_pin=20, freq=50, min_dc=0, max_dc=90, init_range=0) #instantiate a node (starts node)
     node.start()
-
-    signal.signal(signal.SIGINT, sigint_handler)
-
-    rclpy.spin(node) # .spin runs a node until it is manually killed
-
-    GPIO.cleanup()
-    node.destroy_node()
-    rclpy.shutdown() # end ros2 comms
-    print("left tread killed successfully")
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        GPIO.cleanup()
+        rclpy.shutdown() # end ros2 comms
+        print("left tread killed successfully")
 
 if __name__ == '__main__':
     main()
