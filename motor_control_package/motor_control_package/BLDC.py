@@ -55,7 +55,7 @@ class BLDC(MotorListener):
 
         self.pwm = GPIO.PWM(pin, freq)
         self.pwm.start(self.convertRangeToDutyCycle(init_range))
-        GPIO.output(self.en_pin, GPIO.LOW)
+        GPIO.output(self.en_pin, GPIO.HIGH)
 
         self.get_logger().info("BLDC Node Initialized")
 
@@ -74,6 +74,11 @@ class BLDC(MotorListener):
         self.pwm.ChangeDutyCycle(0)
 
     def update(self, data):
+        if (abs(data) < 1.0):
+            GPIO.output(self.en_pin, GPIO.HIGH)
+        else:
+            GPIO.output(self.en_pin, GPIO.HIGH)
+            
         if data < 0:
             GPIO.output(self.dir_pin, GPIO.HIGH)
         else:

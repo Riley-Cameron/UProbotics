@@ -33,8 +33,9 @@ class BaseControl(Node):
             right_vel.data = 0.0
 
             if (msg.angular.z == 0):
-                left_vel.data = msg.linear.x
-                right_vel.data = -msg.linear.x
+                if (abs(msg.linear.x) > 1.0):
+                    left_vel.data = msg.linear.x
+                    right_vel.data = -msg.linear.x
             elif (msg.angular.z == 50):
                 left_vel.data = -65.0
                 right_vel.data = -65.0
