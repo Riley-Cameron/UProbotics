@@ -55,7 +55,7 @@ class TeleopNode(Node):
                 turn_right = self.joystick.get_button(5) #right bumper
                 
                 # Convert the joystick Y-axis position to a speed value (0-255).
-                self.cmd_vel.linear.x = float(drive_axis * -100)
+                self.cmd_vel.linear.x = float(drive_axis * 100)
 
                 #set turning values if x vel is 0
                 if abs(self.cmd_vel.linear.x) < 1.0:
