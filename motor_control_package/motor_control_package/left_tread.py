@@ -15,10 +15,10 @@ def sigint_handler(sig, frame):
 def main(args=None):
     rclpy.init(args=args) #initialize ros2 communication
 
-    signal.signal(signal.SIGINT, sigint_handler)
-
     node = BLDC(topic='/motor/tread_left', node='left_tread', pin=12, dir_pin=16, en_pin=20, freq=50, min_dc=0, max_dc=90, init_range=0) #instantiate a node (starts node)
     node.start()
+
+    signal.signal(signal.SIGINT, sigint_handler)
 
     rclpy.spin(node) # .spin runs a node until it is manually killed
 
