@@ -77,8 +77,8 @@ class BLDC(MotorListener):
         if (abs(data) < 1.0):
             GPIO.output(self.en_pin, GPIO.HIGH)
         else:
-            GPIO.output(self.en_pin, GPIO.HIGH)
-            
+            GPIO.output(self.en_pin, GPIO.LOW)
+
         if data < 0:
             GPIO.output(self.dir_pin, GPIO.HIGH)
         else:
@@ -91,3 +91,4 @@ class BLDC(MotorListener):
 
     def on_exit(self):
         GPIO.output(self.en_pin, GPIO.HIGH)
+        GPIO.cleanup()

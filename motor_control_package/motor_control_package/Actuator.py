@@ -73,4 +73,4 @@ class Actuator(MotorListener):
         pass
 
     def on_exit(self):
-        pass
+        GPIO.cleanup()
