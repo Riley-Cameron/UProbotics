@@ -46,10 +46,24 @@ class BaseControl(Node):
             self.right_tread_pub.publish(right_vel)
 
     def recieve_arm_state(self, msg: Int16):
-        pass
+        #send value if it is new
+        if (msg.data != self.last_cmd_arm):
+            self.last_cmd_arm = msg
+
+            arm_state = Float64()
+            arm_state.data = float(msg.data)
+
+            self.arm_state_pub.publish(arm_state)
 
     def recieve_bucket_state(self, msg: Int16):
-        pass
+        #send value if it is new
+        if (msg.data != self.last_cmd_bucket):
+            self.last_cmd_bucket = msg
+
+            bucket_state = Float64()
+            bucket_state.data = float(msg.data)
+
+            self.bucket_state_pub.publish(bucket_state)
 
 
 def main(args=None):
@@ -57,6 +71,7 @@ def main(args=None):
     node = BaseControl() #instantiate a node (starts node)
     rclpy.spin(node) # .spin runs a node until it is manually killed
     rclpy.shutdown() # end ros2 comms
+
 
 if __name__ == '__main__':
     main()
