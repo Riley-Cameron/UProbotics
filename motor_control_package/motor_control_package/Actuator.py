@@ -29,11 +29,11 @@ class Actuator(MotorListener):
         except Exception:
             print('GPIO failure')
         try:
-            GPIO.setup(pinA, GPIO.OUT, initial = GPIO.LOW)
+            GPIO.setup(pinA, GPIO.OUT, initial = GPIO.HIGH)
         except Exception:
             print('PinA setup failure')
         try:
-            GPIO.setup(pinB, GPIO.OUT, initial = GPIO.LOW)
+            GPIO.setup(pinB, GPIO.OUT, initial = GPIO.HIGH)
         except Exception:
             print("PinB setup failure") 
 
