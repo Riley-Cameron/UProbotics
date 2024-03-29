@@ -6,15 +6,16 @@ import RPi.GPIO as GPIO
 def main(args=None):
     rclpy.init(args=args) #initialize ros2 communication
 
-    try:
-        node = BLDC(topic='/motor/tread_left', node='left_tread', pin=12, dir_pin=16, en_pin=20, freq=50, min_dc=0, max_dc=90, init_range=0) #instantiate a node (starts node)
-        node.start()
+    node = BLDC(topic='/motor/tread_left', node='left_tread', pin=12, dir_pin=16, en_pin=20, freq=50, min_dc=0, max_dc=90, init_range=0) #instantiate a node (starts node)
+    node.start()
 
+    try:
         rclpy.spin(node) # .spin runs a node until it is manually killed
     except KeyboardInterrupt:
-        pass
+        print("Kill signal exception caught")
     finally:
         GPIO.cleanup()
+        node.destroy_node()
         rclpy.shutdown() # end ros2 comms
         print("left tread killed successfully")
 
