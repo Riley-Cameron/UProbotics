@@ -54,8 +54,8 @@ class Actuator(MotorListener):
 
     def setPins(self):
         if (self.state == self.STOPPED):
-            GPIO.output(self.pinA, GPIO.LOW)
-            GPIO.output(self.pinB, GPIO.LOW)
+            GPIO.output(self.pinA, GPIO.HIGH)
+            GPIO.output(self.pinB, GPIO.HIGH)
         elif (self.state == self.EXTEND):
             GPIO.output(self.pinA, GPIO.HIGH)
             GPIO.output(self.pinB, GPIO.LOW)
