@@ -14,8 +14,8 @@ class BaseControl(Node):
 
         self.left_tread_pub = self.create_publisher(Float64, "/motor/tread_left", 10)
         self.right_tread_pub = self.create_publisher(Float64, "/motor/tread_right", 10)
-        self.arm_state_pub = self.create_publisher(Float64, "/motor/arm_state", 10)
-        self.bucket_state_pub = self.create_publisher(Float64, "/motor/bucket_state", 10)
+        self.arm_state_pub = self.create_publisher(Float64, "/motor/arm_angle_joint", 10)
+        self.bucket_state_pub = self.create_publisher(Float64, "/motor/bucket_angle_joint", 10)
 
         self.last_cmd_vel = Twist()
         self.last_cmd_arm = Int16()
