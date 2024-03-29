@@ -49,13 +49,12 @@ class BLDC(MotorListener):
         except Exception:
             print('Direction pin setup failure')
         try: 
-            GPIO.setup(en_pin, GPIO.OUT, initial = GPIO.LOW)
+            GPIO.setup(en_pin, GPIO.OUT, initial = GPIO.HIGH)
         except Exception:
             print('Enable pin setup failure')
 
         self.pwm = GPIO.PWM(pin, freq)
         self.pwm.start(self.convertRangeToDutyCycle(init_range))
-        GPIO.output(self.en_pin, GPIO.HIGH)
 
         self.get_logger().info("BLDC Node Initialized")
 
