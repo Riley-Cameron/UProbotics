@@ -73,6 +73,7 @@ class BLDC(MotorListener):
         self.pwm.ChangeDutyCycle(0)
 
     def update(self, data):
+        #TODO fix this!
         if (abs(data) < 1.0):
             GPIO.output(self.en_pin, GPIO.HIGH)
         else:

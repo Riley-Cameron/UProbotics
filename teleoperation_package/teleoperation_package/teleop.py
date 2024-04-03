@@ -72,7 +72,7 @@ class TeleopNode(Node):
                 self.cmd_vel_pub.publish(self.cmd_vel)
                 
 
-                #BUCKET ARM:
+                #BUCKET & ARM:
                 # read joystick values
                 arm_up = self.joystick.get_button(3) #Y button
                 arm_down = self.joystick.get_button(0) #A button

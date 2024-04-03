@@ -5,9 +5,9 @@ import rclpy
 
 class Actuator(MotorListener):
 
-    STOPPED = 0
-    EXTEND = 1
-    RETRACT = 2
+    STOPPED = 0.0
+    EXTEND = 1.0
+    RETRACT = 2.0
 
     def __init__(self, topic, node, pinA, pinB):
         """
