@@ -37,11 +37,11 @@ class BaseControl(Node):
                     left_vel.data = msg.linear.x
                     right_vel.data = -msg.linear.x
             elif (msg.angular.z == 50):
-                left_vel.data = -65.0
-                right_vel.data = -65.0
+                left_vel.data = -60.0
+                right_vel.data = -60.0
             elif (msg.angular.z == -50):
-                left_vel.data = 65.0
-                right_vel.data = 65.0
+                left_vel.data = 60.0
+                right_vel.data = 60.0
 
             self.left_tread_pub.publish(left_vel)
             self.right_tread_pub.publish(right_vel)

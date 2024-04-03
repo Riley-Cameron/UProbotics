@@ -57,6 +57,7 @@ class BLDC(MotorListener):
         self.pwm.start(self.convertRangeToDutyCycle(init_range))
 
         self.get_logger().info("BLDC Node Initialized")
+        self.run()
 
     def convertRangeToDutyCycle(self, percent):
         if (percent < self.MIN_RANGE or percent > self.MAX_RANGE):

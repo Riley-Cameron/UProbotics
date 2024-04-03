@@ -3,23 +3,22 @@ from abc import ABC, abstractmethod
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float64
-from threading import Thread
 
-class MotorListener(ABC, Thread, Node):
+class MotorListener(ABC, Node):
 
     """
     Parameters:
         topic: String for ROS topic name
+        node: String for ROS node name
         updated: True if we have a new value to pass to motor, else False
         data: Last message from the topic stored
     """
     def __init__(self, topic: str, node: str):
-        Thread.__init__(self)
         ABC.__init__(self)
         Node.__init__(self, node)
         self.sub = self.create_subscription(Float64, topic, self.topic_callback, 10)
         self.updated = True
-        self.data = None
+        self.data = 0.0
         self.stop = False
 
 
@@ -50,14 +49,15 @@ class MotorListener(ABC, Thread, Node):
     @abstractmethod
     def on_exit(self):
         pass
-
-    def spin(self):
-        rclpy.spin(self)
     
     def run(self):
-        while rclpy.ok() and not self.stop:
-            if not self.updated:
-                self.updated = True
-                self.update(self.data)
-            self.loop()
-        self.on_exit()
+        try:
+            while rclpy.ok() and not self.stop:
+                if not self.updated:
+                    self.updated = True
+                    self.update(self.data)
+                self.loop()
+            self.on_exit()
+        except KeyboardInterrupt:
+            print(self.node + " killed by ^C")
+            self.on_exit()
