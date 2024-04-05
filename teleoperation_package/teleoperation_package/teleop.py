@@ -95,10 +95,10 @@ class TeleopNode(Node):
 
                 #BUCKET & ARM:
                 # read joystick values
-                arm_up = self.debounce_button(3) #Y button
-                arm_down = self.debounce_button(0) #A button
-                bucket_down = self.debounce_button(2) #X button
-                bucket_up = self.debounce_button(1) #B button
+                arm_up = self.joystick.get_button(3) #Y button
+                arm_down = self.joystick.get_button(0) #A button
+                bucket_down = self.joystick.get_button(2) #X button
+                bucket_up = self.joystick.get_button(1) #B button
 
                 #set arm state message
                 if (arm_up and not arm_down):
@@ -122,7 +122,7 @@ class TeleopNode(Node):
 
                 
                 # Wait a bit before sending the next command to avoid overwhelming the server.
-                time.sleep(0.05)
+                time.sleep(0.1)
         except KeyboardInterrupt:
             # Handle user interrupt (Ctrl+C).
             print("Program terminated by user.")
