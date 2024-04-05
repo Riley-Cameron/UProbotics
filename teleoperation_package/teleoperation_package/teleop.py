@@ -40,7 +40,28 @@ class TeleopNode(Node):
             pygame.quit()
             exit()
 
+        # Define debounce delay
+        self.debounce_delay = 0.2  # Adjust as needed (in seconds)
+        self.last_button_states = [False] * self.joystick.get_numbuttons()
+        self.last_button_times = [0] * self.joystick.get_numbuttons()
+
         self.loop()
+
+
+    def debounce_button(self, button_index):
+        current_state = self.joystick.get_button(button_index)
+        current_time = pygame.time.get_ticks() / 1000.0  # Convert to seconds
+        
+        if current_state != self.last_button_states[button_index]:
+            if current_time - self.last_button_times[button_index] >= self.debounce_delay:
+                self.last_button_states[button_index] = current_state
+                self.last_button_times[button_index] = current_time
+                return current_state
+        else:
+            self.last_button_times[button_index] = current_time
+
+        return False
+    
 
     def loop(self):
         try:
@@ -74,10 +95,10 @@ class TeleopNode(Node):
 
                 #BUCKET & ARM:
                 # read joystick values
-                arm_up = self.joystick.get_button(3) #Y button
-                arm_down = self.joystick.get_button(0) #A button
-                bucket_down = self.joystick.get_button(2) #X button
-                bucket_up = self.joystick.get_button(1) #B button
+                arm_up = self.debounce_button(3) #Y button
+                arm_down = self.debounce_button(0) #A button
+                bucket_down = self.debounce_button(2) #X button
+                bucket_up = self.debounce_button(1) #B button
 
                 #set arm state message
                 if (arm_up and not arm_down):
