@@ -6,8 +6,8 @@ import RPi.GPIO as GPIO
 def main(args=None):
     rclpy.init(args=args) #initialize ros2 communication
 
-    node = Actuator(topic='/motor/arm_angle_joint', node='arm_joint', pinA=23, pinB=24) #instantiate a node (starts node)
-    
+    node = Actuator(topic='/motor/arm_angle_joint', node='arm_joint', pinA=15, pinB=14) #instantiate a node (starts node)
+
     try:
         rclpy.spin(node) # .spin runs a node until it is manually killed
     except KeyboardInterrupt:
