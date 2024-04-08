@@ -33,10 +33,10 @@ class TeleopNode(Node):
             # Initialize the first joystick.
             self.joystick = pygame.joystick.Joystick(0)
             self.joystick.init()
-            print(f"Joystick initialized: {self.joystick.get_name()}")
+            self.get_logger().info(f"Joystick initialized: {self.joystick.get_name()}")
         else:
             # Exit if no joystick is found.
-            print("No joystick detected.")
+            self.get_logger().info("No joystick detected.")
             pygame.quit()
             exit()
 
@@ -44,6 +44,8 @@ class TeleopNode(Node):
         self.debounce_delay = 0.2  # Adjust as needed (in seconds)
         self.last_button_states = [False] * self.joystick.get_numbuttons()
         self.last_button_times = [0] * self.joystick.get_numbuttons()
+
+        self.get_logger().info("Teleoperation Node Initialized")
 
         self.loop()
 
