@@ -38,7 +38,6 @@ class Actuator(MotorListener):
             print("PinB setup failure") 
 
         self.get_logger().info("Actuator Node Initialized")
-        self.run()
         
     def setState(self, data):
         if (data == self.STOPPED):

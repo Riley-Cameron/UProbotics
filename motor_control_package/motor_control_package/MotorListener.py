@@ -17,7 +17,6 @@ class MotorListener(ABC, Node):
         ABC.__init__(self)
         Node.__init__(self, node)
         self.sub = self.create_subscription(Float64, topic, self.topic_callback, 10)
-        self.updated = True
         self.data = 0.0
         self.stop = False
 
@@ -26,7 +25,7 @@ class MotorListener(ABC, Node):
         if self.data == msg.data:
             return
         self.data = msg.data # Unpack std_msgs.Float64 to float
-        self.updated = False
+        self.update(self.data)
 
 
     """
@@ -50,14 +49,3 @@ class MotorListener(ABC, Node):
     def on_exit(self):
         pass
     
-    def run(self):
-        try:
-            while rclpy.ok() and not self.stop:
-                if not self.updated:
-                    self.updated = True
-                    self.update(self.data)
-                self.loop()
-            self.on_exit()
-        except KeyboardInterrupt:
-            print(self.node + " killed by ^C")
-            self.on_exit()
