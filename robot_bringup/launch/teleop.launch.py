@@ -6,12 +6,12 @@ def generate_launch_description():
         Node(
             package='teleoperation_package',
             executable='teleop_node',  
-            name='tn'
+            name='teleop_node'
         ),
         Node(
             package='base_control_package',
             executable='base_control', 
-            name='bc'
+            name='base_control'
         ),
         # Add more nodes as needed
     ])

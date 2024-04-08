@@ -6,22 +6,22 @@ def generate_launch_description():
         Node(
             package='motor_control_package',
             executable='left_tread',  
-            name='lt'
+            name='left_tread'
         ),
         Node(
             package='motor_control_package',
             executable='right_tread', 
-            name='rt'
+            name='right_tread'
         ),
         Node(
             package='motor_control_package',
             executable='arm_joint', 
-            name='aj'
+            name='arm_joint'
         ),
         Node(
             package='motor_control_package',
             executable='bucket_joint', 
-            name='bj' # ;)
+            name='bucket_joint'
         ),
         # Add more nodes as needed
     ])
