@@ -26,39 +26,39 @@ class ActuatorSensor(Node):
         self.extension_time = extension_time
         self.position = 0.0 #track position in ms
         self.actuator_state = self.STOPPED #track actuator state
+        self.cycles = 0
 
         self.sub = self.create_subscription(Float64, signal_topic, self.update_state, 10)
         self.position_pub = self.create_publisher(Float64, pos_topic, 10)
+        self.timer = self.create_timer(0.001, self.timer_callback)
 
-        self.loop()
+        self.get_logger().info("Initialized Actuator Sensor")
 
     def update_state(self, msg: Float64):
         self.actuator_state = msg.data
 
-    def loop(self):
+    def timer_callback(self):
         try:
             msg = Float64()
-            cycles = 0
-            while True:
-                if (self.actuator_state == self.EXTEND):
-                    self.position += 1.0
-                elif (self.actuator_state == self.RETRACT):
-                    self.position -= 1.0
 
-                if (self.position < 0.0):
-                    self.position = 0.0
+            if (self.actuator_state == self.EXTEND):
+                self.position += 1.0
+            elif (self.actuator_state == self.RETRACT):
+                self.position -= 1.0
 
-                if (self.position > self.extension_time):
-                    self.position = self.extension_time
+            if (self.position < 0.0):
+                self.position = 0.0
 
-                percentage = 100.0 * self.position / self.extension_time 
-                if (cycles == 100):
-                    msg.data = percentage
-                    self.position_pub.publish(msg)
-                    cycles = 0
+            if (self.position > self.extension_time):
+                self.position = self.extension_time
 
-                time.sleep(0.001)
-                cycles += 1
+            percentage = 100.0 * self.position / self.extension_time 
+            if (self.cycles == 100):
+                msg.data = percentage
+                self.position_pub.publish(msg)
+                self.cycles = 0
+
+            self.cycles += 1
                 
         except KeyboardInterrupt:
             pass

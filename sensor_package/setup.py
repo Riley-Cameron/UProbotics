@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            "arm_sensor = sensor_package.arm_sensor:main",
+            "bucket_sensor = sensor_package.bucket_sensor:main"
         ],
     },
 )
