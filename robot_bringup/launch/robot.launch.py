@@ -25,8 +25,13 @@ def generate_launch_description():
         ),
         Node(
             package='sensor_package',
-            executable='camera_node', 
-            name='camera_node'
+            executable='camera1', 
+            name='camera1'
+        ),
+        Node(
+            package='sensor_package',
+            executable='camera2', 
+            name='camera2'
         ),
         # Add more nodes as needed
     ])
