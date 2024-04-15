@@ -13,6 +13,11 @@ def generate_launch_description():
             executable='base_control', 
             name='base_control'
         ),
+        Node(
+            package='rqt_image_view',
+            executable='rqt_image_view', 
+            name='image_viewer'
+        ),
         # Add more nodes as needed
     ])
 

@@ -23,7 +23,7 @@ class ImagePublisher(Node):
             self.publisher_.publish(
                 self.cv_bridge.cv2_to_imgmsg(frame, 'bgr8'))             
 
-        self.get_logger().info('Publishing video frame')                 
+        #self.get_logger().info('Publishing video frame')                 
 
 def main(args=None):                                 
     rclpy.init(args=args)                            
