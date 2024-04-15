@@ -16,7 +16,9 @@ class ImagePublisher(Node):
         self.timer = self.create_timer(0.1, self.timer_callback)         
         self.cap1 = cv2.VideoCapture(0)  
         self.cap2 = cv2.VideoCapture(1)                                 
-        self.cv_bridge = CvBridge()                                      
+        self.cv_bridge = CvBridge()     
+
+        self.get_logger().info("Initialized Camera Node")                                 
 
     def timer_callback(self):
         ret1, frame1 = self.cap1.read()                                     
