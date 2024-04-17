@@ -23,6 +23,16 @@ def generate_launch_description():
             executable='bucket_joint', 
             name='bucket_joint'
         ),
+        Node(
+            package='sensor_package',
+            executable='camera1', 
+            name='camera1'
+        ),
+        Node(
+            package='sensor_package',
+            executable='camera2', 
+            name='camera2'
+        ),
         # Add more nodes as needed
     ])
 

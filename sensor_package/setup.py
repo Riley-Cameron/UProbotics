@@ -22,7 +22,8 @@ setup(
         'console_scripts': [
             "arm_sensor = sensor_package.arm_sensor:main",
             "bucket_sensor = sensor_package.bucket_sensor:main",
-            "camera_node = sensor_package.camera:main"
+            "camera1 = sensor_package.camera1:main",
+            "camera2 = sensor_package.camera2:main"
         ],
     },
 )
