@@ -5,12 +5,19 @@ from geometry_msgs.msg import Twist
 from std_msgs.msg import Float64, Int16
 
 class BaseControl(Node):
+    SPEED_SCALING = 0.6
+    TURN_SPEED = 50.0
 
     def __init__(self):
         super().__init__("base_control")
         self.cmd_vel_sub = self.create_subscription(Twist, "/cmd/velocity", self.recieve_vel, 10)
         self.cmd_arm_sub = self.create_subscription(Int16, "/cmd/arm_state", self.recieve_arm_state, 10)
         self.cmd_bucket_sub = self.create_subscription(Int16, "/cmd/bucket_state", self.recieve_bucket_state, 10)
+        self.sensor_arm_sub = self.create_subscription(Float64, "sensor/arm_joint", self.recieve_arm_feedback, 10)
+        self.sensor_bucket_sub = self.create_subscription(Float64, "sensor/bucket_joint", self.recieve_bucket_feedback, 10)
+
+        self.bucket_feedback = 0.0
+        self.arm_feedback = 0.0
 
         self.left_tread_pub = self.create_publisher(Float64, "/motor/tread_left", 10)
         self.right_tread_pub = self.create_publisher(Float64, "/motor/tread_right", 10)
@@ -34,14 +41,14 @@ class BaseControl(Node):
 
             if (msg.angular.z == 0):
                 if (abs(msg.linear.x) > 1.0):
-                    left_vel.data = msg.linear.x
-                    right_vel.data = -msg.linear.x
+                    left_vel.data = msg.linear.x * self.SPEED_SCALING
+                    right_vel.data = -msg.linear.x * self.SPEED_SCALING
             elif (msg.angular.z == 50):
-                left_vel.data = -60.0
-                right_vel.data = -60.0
+                left_vel.data = -self.TURN_SPEED
+                right_vel.data = -self.TURN_SPEED
             elif (msg.angular.z == -50):
-                left_vel.data = 60.0
-                right_vel.data = 60.0
+                left_vel.data = self.TURN_SPEED
+                right_vel.data = self.TURN_SPEED
 
             self.left_tread_pub.publish(left_vel)
             self.right_tread_pub.publish(right_vel)
@@ -66,6 +73,11 @@ class BaseControl(Node):
 
             self.bucket_state_pub.publish(bucket_state)
 
+    def recieve_arm_feedback(self, msg: Float64):
+        self.arm_feedback = msg.data
+
+    def recieve_bucket_feedback(self, msg: Float64):
+        self.bucket_feedback = msg.data
 
 def main(args=None):
     rclpy.init(args=args) #initialize ros2 communication
