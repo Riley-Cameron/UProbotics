@@ -18,11 +18,6 @@ def generate_launch_description():
             executable='rqt_image_view', 
             name='image_viewer1'
         ),
-        Node(
-            package='rqt_image_view',
-            executable='rqt_image_view', 
-            name='image_viewer2'
-        ),
         # Add more nodes as needed
     ])
 

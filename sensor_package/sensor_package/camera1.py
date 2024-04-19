@@ -12,7 +12,7 @@ class ImagePublisher(Node):
     def __init__(self, name):
         super().__init__(name)                                           
         self.pub1 = self.create_publisher(Image, 'image1_raw', 10)  
-        self.timer = self.create_timer(0.1, self.timer_callback)         
+        self.timer = self.create_timer(0.2, self.timer_callback)         
         self.cap1 = cv2.VideoCapture(0)                                  
         self.cv_bridge = CvBridge()     
 
